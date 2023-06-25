@@ -1,0 +1,84 @@
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+type Musica struct {
+	Titulo   string
+	Artista  string
+	Duracao  time.Duration
+}
+
+type Playlist struct {
+	Nome     string
+	Musicas  []Musica
+}
+
+func encontrarPlaylistsPorTitulo(titulo string, playlists []Playlist) []Playlist {
+	var playlistsEncontradas []Playlist
+
+	for _, playlist := range playlists {
+		for _, musica := range playlist.Musicas {
+			if musica.Titulo == titulo {
+				playlistsEncontradas = append(playlistsEncontradas, playlist)
+				break
+			}
+		}
+	}
+
+	return playlistsEncontradas
+}
+
+func main() {
+	musicas1 := []Musica{
+		{
+			Titulo:  "Música 1",
+			Artista: "Artista 1",
+			Duracao: time.Minute * 3 + time.Second*30,
+		},
+		{
+			Titulo:  "Música 2",
+			Artista: "Artista 2",
+			Duracao: time.Minute * 4 + time.Second*15,
+		},
+		{
+			Titulo:  "Música 3",
+			Artista: "Artista 3",
+			Duracao: time.Minute * 2 + time.Second*45,
+		},
+	}
+
+	musicas2 := []Musica{
+		{
+			Titulo:  "Música 4",
+			Artista: "Artista 4",
+			Duracao: time.Minute * 3 + time.Second*50,
+		},
+		{
+			Titulo:  "Música 5",
+			Artista: "Artista 5",
+			Duracao: time.Minute * 4 + time.Second*10,
+		},
+	}
+
+	playlists := []Playlist{
+		{
+			Nome:    "Minha Playlist 1",
+			Musicas: musicas1,
+		},
+		{
+			Nome:    "Minha Playlist 2",
+			Musicas: musicas2,
+		},
+	}
+
+	titulo := "Música 3"
+	playlistsEncontradas := encontrarPlaylistsPorTitulo(titulo, playlists)
+
+	fmt.Printf("Playlists que contêm a música com título '%s':\n", titulo)
+	for _, playlist := range playlistsEncontradas {
+		fmt.Println(playlist.Nome)
+	}
+}
